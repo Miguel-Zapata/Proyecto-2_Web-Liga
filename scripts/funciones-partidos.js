@@ -31,7 +31,7 @@ fila1.appendChild(encabezado4);
 fila1.appendChild(encabezado5);
 document.getElementById('thead').appendChild(fila1); */
 
-function crearTabla(partidos) {
+function crearTablaPartidos(partidos) {
 
     let tbody = document.getElementById('tbody')
 
@@ -66,6 +66,6 @@ function crearTabla(partidos) {
     }
     console.log(data);
 }
-crearTabla(data.matches);
+crearTablaPartidos(data.matches);
 
 // console.log(data.matches[i].utcDate);
