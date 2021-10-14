@@ -1,3 +1,58 @@
+.aqui {
+    font-weight: bold;
+}
+
+.home_title {
+    text-align: center;
+    color: snow;
+    font-weight: bold;
+}
+
+.carousel {
+    max-width: 100%;
+}
+
+body {
+    background-image: url(../images/football-blur10.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    background-color: #16161d;
+}
+
+table {
+    background-color: #fffafad8;
+}
+
+tbody.tbody_partidos tr :first-child {
+    text-align: right;
+}
+
+tbody.tbody_partidos tr :nth-child(2n) {
+    text-align: center;
+}
+
+tbody.tbody_partidos tr :nth-child(4n) {
+    text-align: center;
+}
+
+tbody.tbody_partidos tr :last-child {
+    text-align: center;
+}
+
+tbody.tbody_clasificacion tr :first-child {
+    text-align: right;
+}
+
+tbody.tbody_clasificacion tr :nth-child(2n) {
+    text-align: left;
+}
+
+tbody.tbody_clasificacion tr :nth-child(8n) {
+    text-align: center;
+}
+
 img {
     width: 30px;
 }
