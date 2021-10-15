@@ -41,11 +41,20 @@ function crearTablaPartidos(partidos) {
         let filaExtra = document.createElement('tr');
         let celdaExtra1 = document.createElement('td');
         celdaExtra1.innerHTML = partidos[i].homeTeam.name;
+
+        let celdaEscudo1 = document.createElement('td');
+        celdaEscudo1.innerHTML = imagenHome;
+
         let celdaExtra2 = document.createElement('td');
-        celdaExtra2.innerHTML = `${imagenHome} ${partidos[i].score.fullTime.homeTeam} - ${partidos[i].score.fullTime.awayTeam} ${imagenAway}`;
+        celdaExtra2.innerHTML = `${partidos[i].score.fullTime.homeTeam} - ${partidos[i].score.fullTime.awayTeam}`;
         if (partidos[i].score.fullTime.homeTeam == null && partidos[i].score.fullTime.awayTeam == null) {
             celdaExtra2.innerHTML = `${imagenHome} sin jugar ${imagenAway}`;
         }
+
+        let celdaEscudo2 = document.createElement('td');
+        celdaEscudo2.innerHTML = imagenAway;
+
+
         let celdaExtra3 = document.createElement('td');
         celdaExtra3.innerHTML = partidos[i].awayTeam.name;
         let celdaExtra4 = document.createElement('td');
@@ -60,7 +69,9 @@ function crearTablaPartidos(partidos) {
             celdaExtra5.innerHTML = "NO JUGADO"
         }
         filaExtra.appendChild(celdaExtra1);
+        filaExtra.appendChild(celdaEscudo1);
         filaExtra.appendChild(celdaExtra2);
+        filaExtra.appendChild(celdaEscudo2);
         filaExtra.appendChild(celdaExtra3);
         filaExtra.appendChild(celdaExtra4);
         filaExtra.appendChild(celdaExtra5);

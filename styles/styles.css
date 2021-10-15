@@ -25,15 +25,31 @@ table {
     background-color: #fffafad8;
 }
 
+img {
+    width: 30px;
+}
+
+.th_date {
+    width: 130px;
+}
+
 tbody.tbody_partidos tr :first-child {
     text-align: right;
 }
 
 tbody.tbody_partidos tr :nth-child(2n) {
+    text-align: right;
+}
+
+tbody.tbody_partidos tr :nth-child(3n) {
     text-align: center;
 }
 
 tbody.tbody_partidos tr :nth-child(4n) {
+    text-align: left;
+}
+
+tbody.tbody_partidos tr :nth-child(6n) {
     text-align: center;
 }
 
@@ -49,10 +65,10 @@ tbody.tbody_clasificacion tr :nth-child(2n) {
     text-align: left;
 }
 
-tbody.tbody_clasificacion tr :nth-child(8n) {
-    text-align: center;
+tbody.tbody_clasificacion tr :nth-child(3n) {
+    text-align: left;
 }
 
-img {
-    width: 30px;
+tbody.tbody_clasificacion tr :nth-child(n+4) {
+    text-align: center;
 }
