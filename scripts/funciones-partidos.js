@@ -48,7 +48,7 @@ function crearTablaPartidos(partidos) {
         let celdaExtra2 = document.createElement('td');
         celdaExtra2.innerHTML = `${partidos[i].score.fullTime.homeTeam} - ${partidos[i].score.fullTime.awayTeam}`;
         if (partidos[i].score.fullTime.homeTeam == null && partidos[i].score.fullTime.awayTeam == null) {
-            celdaExtra2.innerHTML = `${imagenHome} sin jugar ${imagenAway}`;
+            celdaExtra2.innerHTML = 'sin jugar';
         }
 
         let celdaEscudo2 = document.createElement('td');
@@ -76,6 +76,7 @@ function crearTablaPartidos(partidos) {
         filaExtra.appendChild(celdaExtra4);
         filaExtra.appendChild(celdaExtra5);
         tbody.appendChild(filaExtra);
+
     }
     console.log(data);
 }
