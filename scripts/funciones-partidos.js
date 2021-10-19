@@ -82,4 +82,6 @@ function crearTablaPartidos(partidos) {
 }
 crearTablaPartidos(data.matches);
 
-// console.log(data.matches[i].utcDate);
+// Hacer un array con todos los equipos
+// recorrer el array de equipos y añadirlos al select como opción
+// Condición: si el equipo X está seleccionado, mostrar en la tabla solo ese equipo. Tanto Local como visitante.
