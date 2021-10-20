@@ -77,11 +77,91 @@ function crearTablaPartidos(partidos) {
         filaExtra.appendChild(celdaExtra5);
         tbody.appendChild(filaExtra);
 
+
     }
     console.log(data);
 }
 crearTablaPartidos(data.matches);
 
-// Hacer un array con todos los equipos
-// recorrer el array de equipos y añadirlos al select como opción
-// Condición: si el equipo X está seleccionado, mostrar en la tabla solo ese equipo. Tanto Local como visitante.
+
+function addOptions(partidos) {
+    // recorrer el array de partidos Y crear nueva array con los nombres de los equipos sin repetir ordenados por orden alfabetico.
+    let equipos = partidos.map(function(equipo, index, array) {
+        return equipo.homeTeam.name;
+    });
+    equipos.sort((a, b) => {
+        a = a.toLowerCase();
+        b = b.toLowerCase();
+        if (a < b) {
+            return -1;
+        }
+        if (a > b) {
+            return 1;
+        }
+        return 0;
+    });
+    equipos = new Set(equipos);
+    // el set no es iterable y hay que convertirlo en array.
+    equipos = Array.from(equipos);
+
+    // recorrer array de equipos (equipos1) y añadirlos al input.
+    let inputTeam = document.getElementById('team')
+    for (i = 0; i < equipos.length; i++) {
+        let option = new Option(equipos[i], equipos[i]);
+        inputTeam.append(option);
+    }
+    inputTeam.addEventListener("change", function() {
+        filterTeams(data.matches);
+    })
+
+}
+addOptions(data.matches);
+
+function filterTeams(partidos) {
+    let inputTeam = document.getElementById('team');
+    //.value me muestra el valor de la option que tengo seleccionada en el input.
+    // console.log(inputTeam.value);
+
+    let equipo = partidos.filter(function(partido, i, array) {
+        if (partido.awayTeam.name == inputTeam.value) {
+            // le tengo que decir si la comparación es true o false, si no, pasa de mi cara
+            return true;
+        }
+        if (partido.homeTeam.name == inputTeam.value) {
+            return true;
+        }
+        return false;
+    })
+    console.log(equipo);
+    creaTablaFiltrada(equipo);
+}
+
+function creaTablaFiltrada(equipo) {
+    let tbody = document.getElementById('tbody');
+    tbody.innerHTML = "";
+    for (j = 0; j < equipo.length; j++) {
+        let imagenHome = "<img src='https://crests.football-data.org/" + equipo[j].homeTeam.id + ".svg'/>";
+        let imagenAway = "<img src='https://crests.football-data.org/" + equipo[j].awayTeam.id + ".svg'/>";
+
+        let fila = document.createElement('tr');
+        //equipo loccal
+        let celda1 = document.createElement('td');
+        celda1.innerHTML = equipo[j].homeTeam.name;
+        //escudo local
+        let celda2 = document.createElement('td');
+        celda2.innerHTML = imagenHome;
+        //resultado
+        let celda3 = document.createElement('td');
+        celda3.innerHTML = `${equipo[j].score.fullTime.homeTeam} - ${equipo[j].score.fullTime.awayTeam}`;
+        //escudo away
+        let celda4 = document.createElement('td');
+        celda4.innerHTML = imagenAway;
+        // equipo away
+        let celda5 = document.createElement('td');
+        //fecha
+        let celda6 = document.createElement('td');
+        // estado
+        let celda7 = document.createElement('td');
+    }
+}
+// filterTeams(data.matches)
