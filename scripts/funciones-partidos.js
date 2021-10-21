@@ -105,23 +105,37 @@ function addOptions(partidos) {
     equipos = Array.from(equipos);
 
     // recorrer array de equipos (equipos1) y añadirlos al input.
-    let inputTeam = document.getElementById('team')
+    let inputTeam = document.getElementById('team');
     for (i = 0; i < equipos.length; i++) {
         let option = new Option(equipos[i], equipos[i]);
         inputTeam.append(option);
     }
     inputTeam.addEventListener("change", function() {
-        filterTeams(data.matches);
+        filter(data.matches);
     })
 
+    let inputResult = document.getElementById('result');
+    let optionResult = ["GANA", "PIERDE", "EMPATA", "PRÓXIMOS"];
+    for (k = 0; k < optionResult.length; k++) {
+        let option = document.createElement("option");
+        option.value = optionResult[k];
+        option.text = optionResult[k];
+
+        inputResult.appendChild(option);
+    }
+    inputResult.addEventListener("change", function() {
+        filter(data.matches);
+        console.log("HOLA CARACOLA");
+    })
 }
 addOptions(data.matches);
 
-function filterTeams(partidos) {
+function filter(partidos) {
     let inputTeam = document.getElementById('team');
     //.value me muestra el valor de la option que tengo seleccionada en el input.
     // console.log(inputTeam.value);
 
+    // filter me devuelve un array con todos los partidos en los que juega el equipo que seleccione.
     let equipo = partidos.filter(function(partido, i, array) {
         if (partido.awayTeam.name == inputTeam.value) {
             // le tengo que decir si la comparación es true o false, si no, pasa de mi cara
@@ -132,7 +146,25 @@ function filterTeams(partidos) {
         }
         return false;
     })
-    console.log(equipo);
+
+    /* let results = equipo.filter(function(equipo, i, array) {
+        if (equipo.score.winner == "DRAW") {
+            return true; //empate
+        } else if (equipo.score.winner == null) {
+            return true; //proximos
+        } else if (equipo.homeTeam.name == inputTeam.value && equipo.score.fullTime.homeTeam > equipo.score.fulltime.awayTeam) {
+            return true; //gana
+        } else if (equipo.awayTeam.name == inputTeam.value && equipo.score.fullTime.awayTeam > equipo.score.fullTime.homeTeam) {
+            return true; // gana
+        } else if (equipo.homeTeam.name == inputTeam.value && equipo.score.fullTime.homeTeam < equipo.score.fulltime.awayTeam) {
+            return true; //pierde
+        } else if (equipo.awayTeam.name == inputTeam.value && equipo.score.fullTime.awayTeam < equipo.score.fullTime.homeTeam) {
+            return true; // pierde
+        } else {
+            return false;
+        }
+
+    }) */
     creaTablaFiltrada(equipo);
 }
 
@@ -153,15 +185,83 @@ function creaTablaFiltrada(equipo) {
         //resultado
         let celda3 = document.createElement('td');
         celda3.innerHTML = `${equipo[j].score.fullTime.homeTeam} - ${equipo[j].score.fullTime.awayTeam}`;
+        if (equipo[j].score.fullTime.homeTeam == null && equipo[j].score.fullTime.awayTeam == null) {
+            celda3.innerHTML = 'sin jugar';
+        }
         //escudo away
         let celda4 = document.createElement('td');
         celda4.innerHTML = imagenAway;
         // equipo away
         let celda5 = document.createElement('td');
+        celda5.innerHTML = equipo[j].awayTeam.name;
         //fecha
         let celda6 = document.createElement('td');
+        celda6.innerHTML = equipo[j].utcDate.substring(0, 10);
         // estado
         let celda7 = document.createElement('td');
+        celda7.innerHTML = equipo[j].status;
+        if (equipo[j].status == "FINISHED") {
+            celda7.innerHTML = "JUGADO"
+        } else if (equipo[j].status == "POSTPONED") {
+            celda7.innerHTML = "POSTPUESTO"
+        } else if (equipo[j].status == "SCHEDULED") {
+            celda7.innerHTML = "NO JUGADO"
+        }
+
+        tbody.appendChild(fila);
+        fila.appendChild(celda1);
+        fila.appendChild(celda2);
+        fila.appendChild(celda3);
+        fila.appendChild(celda4);
+        fila.appendChild(celda5);
+        fila.appendChild(celda6);
+        fila.appendChild(celda7);
     }
+    console.log(equipo);
 }
+
+/* function addOption2() {
+    let inputResult = document.getElementById('result');
+    let optionResult = ["GANA", "PIERDE", "EMPATA", "PRÓXIMOS"];
+    for (k = 0; k < optionResult.length; k++) {
+        let option = document.createElement("option");
+        option.value = optionResult[k];
+        option.text = optionResult[k];
+
+        inputResult.appendChild(option);
+    }
+    inputResult.addEventListener("change", function() {
+        filterResult(data.matches);
+        console.log("HOLA CARACOLA");
+    })
+
+}
+addOption2(); */
+
+/* function filterResult(partidos) {
+    let inputTeam = document.getElementById('team');
+    let inputResult = document.getElementById('result');
+
+    let empate = partidos.filter(function(partido, i, array) {
+        if (partido.score.winner == "DRAW") {
+            return true; //empate
+            inputResult
+        } else if (partido.score.winner == null) {
+            return true; //proximos
+        } else if (partido.homeTeam.name == inputTeam.value && partido.score.fullTime.homeTeam > partido.score.fulltime.awayTeam) {
+            return true; //gana
+        } else if (partido.awayTeam.name == inputTeam.value && partido.score.fullTime.awayTeam > partido.score.fullTime.homeTeam) {
+            return true; // gana
+        } else if (partido.homeTeam.name == inputTeam.value && partido.score.fullTime.homeTeam < partido.score.fulltime.awayTeam) {
+            return true; //pierde
+        } else if (partido.awayTeam.name == inputTeam.value && partido.score.fullTime.awayTeam < partido.score.fullTime.homeTeam) {
+            return true; // pierde
+        } else {
+            return false;
+        }
+
+    })
+    console.log(empate);
+} */
+
 // filterTeams(data.matches)
