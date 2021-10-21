@@ -88,3 +88,8 @@ tbody#tbodyAway tr :nth-child(2n) {
 tbody#tbodyAway tr :nth-child(n+3) {
     text-align: center;
 }
+
+.alert {
+    color: #16161d;
+    background-color: rgb(255, 231, 125);
+}
