@@ -53,7 +53,7 @@ function addDatos(partidos) {
     // 8. Una vez fuera del loop de partidos, iterar por el array estadisticas
     for (e = 0; e < estadisticas.length; e++) {
         // 9. Añadir la key avg a cada objeto, con el valor goals/matches
-        estadisticas[e].avg = (estadisticas[e].goals / estadisticas[e].matches).toFixed(2);
+        estadisticas[e].avg = (estadisticas[e].goals / estadisticas[e].matches);
     }
 
     // Le estoy diciendo a la function creaTabla que use el Array de objetos estadisticas como parametro, para poder usar la variable que hay en una función
@@ -65,7 +65,7 @@ function addDatos(partidos) {
 }
 addDatos(data.matches);
 
-
+// explicar funcion
 function addDatos2(partidos2) {
     let estadisticas2 = [];
 
@@ -143,7 +143,7 @@ function creaTabla(arrayEstadisticas) {
         let celdaHome4 = document.createElement('td');
         celdaHome4.innerHTML = arrayEstadisticas[j].goals;
         let celdaHome5 = document.createElement('td');
-        celdaHome5.innerHTML = arrayEstadisticas[j].avg;
+        celdaHome5.innerHTML = arrayEstadisticas[j].avg.toFixed(2);
 
         filaHome.appendChild(celdaHome1);
         filaHome.appendChild(celdaHome2);

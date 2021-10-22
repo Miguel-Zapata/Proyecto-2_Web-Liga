@@ -129,15 +129,6 @@ function addOptions(partidos) {
 }
 addOptions(data.matches);
 
-// function alert() {
-// let warning = document.getElementById("alert");
-// warning.addClass('d-none');
-// if (inputTeam.value == "") {
-// warning.classList.remove('d-none');
-//         window.alert("¡CUIDADO! No has seleccionado un Equipo");
-//     }
-// }
-
 function filter(partidos) {
     let alert = document.getElementById('alert');
     alert.classList.add('d-none');
@@ -246,49 +237,3 @@ function creaTablaFiltrada(partido) { // cambiar partido por partido
     }
     console.log(partido);
 }
-
-/* function addOption2() {
-    let inputResult = document.getElementById('result');
-    let optionResult = ["GANA", "PIERDE", "EMPATA", "PRÓXIMOS"];
-    for (k = 0; k < optionResult.length; k++) {
-        let option = document.createElement("option");
-        option.value = optionResult[k];
-        option.text = optionResult[k];
-
-        inputResult.appendChild(option);
-    }
-    inputResult.addEventListener("change", function() {
-        filterResult(data.matches);
-        console.log("HOLA CARACOLA");
-    })
-
-}
-addOption2(); */
-
-/* function filterResult(partidos) {
-    let inputTeam = document.getElementById('team');
-    let inputResult = document.getElementById('result');
-
-    let empate = partidos.filter(function(partido, i, array) {
-        if (partido.score.winner == "DRAW") {
-            return true; //empate
-            inputResult
-        } else if (partido.score.winner == null) {
-            return true; //proximos
-        } else if (partido.homeTeam.name == inputTeam.value && partido.score.fullTime.homeTeam > partido.score.fulltime.awayTeam) {
-            return true; //gana
-        } else if (partido.awayTeam.name == inputTeam.value && partido.score.fullTime.awayTeam > partido.score.fullTime.homeTeam) {
-            return true; // gana
-        } else if (partido.homeTeam.name == inputTeam.value && partido.score.fullTime.homeTeam < partido.score.fulltime.awayTeam) {
-            return true; //pierde
-        } else if (partido.awayTeam.name == inputTeam.value && partido.score.fullTime.awayTeam < partido.score.fullTime.homeTeam) {
-            return true; // pierde
-        } else {
-            return false;
-        }
-
-    })
-    console.log(empate);
-} */
-
-// filterTeams(data.matches)
