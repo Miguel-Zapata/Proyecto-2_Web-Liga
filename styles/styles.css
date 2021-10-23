@@ -72,3 +72,24 @@ tbody.tbody_clasificacion tr :nth-child(3n) {
 tbody.tbody_clasificacion tr :nth-child(n+4) {
     text-align: center;
 }
+
+tbody#tbodyHome tr :nth-child(2n) {
+    text-align: left;
+}
+
+tbody#tbodyHome tr :nth-child(n+3) {
+    text-align: center;
+}
+
+tbody#tbodyAway tr :nth-child(2n) {
+    text-align: left;
+}
+
+tbody#tbodyAway tr :nth-child(n+3) {
+    text-align: center;
+}
+
+.alert {
+    color: #16161d;
+    background-color: rgb(255, 231, 125);
+}
