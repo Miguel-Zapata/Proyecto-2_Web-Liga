@@ -1,3 +1,28 @@
+let api = "d0fb2ac181374b5ea229e7642d2c7ada"
+let url = "https://api.football-data.org/v2/competitions/2014/standings"
+
+fetch(url, {
+        method: "GET",
+        headers: {
+            "X-Auth-Token": api
+        }
+    })
+    .then(function(response) {
+        if (response.ok) {
+            return response.json();
+        }
+    })
+    .then(function(data) {
+        init(data);
+    })
+    .catch(function(err) {
+        console.error(err);
+    })
+
+function init(data) {
+    crearTablaClasificaciones(data.standings[0].table);
+}
+
 function crearTablaClasificaciones(clasificaciones) {
     let tbody = document.getElementById('tbody');
     tbody.setAttribute("class", "tbody_clasificacion");
@@ -22,6 +47,3 @@ function crearTablaClasificaciones(clasificaciones) {
         tbody.appendChild(positionRow);
     }
 }
-crearTablaClasificaciones(data.standings[0].table);
-
-console.log(data);

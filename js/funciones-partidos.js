@@ -1,9 +1,37 @@
+let api = "d0fb2ac181374b5ea229e7642d2c7ada"
+let url = "https://api.football-data.org/v2/competitions/2014/matches?="
+
+fetch(url, {
+        method: "GET",
+        headers: {
+            "X-Auth-Token": api
+        }
+    })
+    .then(function(response) {
+        if (response.ok) {
+            return response.json();
+        }
+    })
+    .then(function(data) {
+        init(data);
+    })
+    .catch(function(err) {
+        console.error(err);
+    })
+
+function init(data) {
+    crearTablaPartidos(data.matches);
+    addOptions(data.matches);
+    filter(data.matches);
+}
+
 // CREA LA TABLA CON TODOS LOS PARTIDOS.
 function crearTablaPartidos(partidos) {
 
     // OBTENGO LA id DEL tbody PARA PODER INDEXARLO MÁS ADELANTE.
     // LE AÑADO UNA CLASE PARA HACER MODIFICACIONES EN CSS.
     let tbody = document.getElementById('tbody');
+    let loader = document.getElementById('loader')
     tbody.setAttribute("class", "tbody_partidos");
 
     // HAGO UN LOOP POR data.matches PARA CREAR LA TABLA Y AÑADIRLE CONTENIDO.
@@ -53,9 +81,10 @@ function crearTablaPartidos(partidos) {
         filaExtra.appendChild(celdaExtra4);
         filaExtra.appendChild(celdaExtra5);
         tbody.appendChild(filaExtra);
+        tbody.append(loader);
     }
 }
-crearTablaPartidos(data.matches);
+
 
 
 // AÑADE LAS OPCIONES A LOS INPUTS TIPO SELECT QUE HARÁN DE FILTROS EN LA PAGINA partidos.html.
@@ -97,7 +126,7 @@ function addOptions(partidos) {
     }
     // PREPARO EL INPUT CON EL EVENTO change PARA QUE ME DE LA FUNCIÓN filter CUANDO SE PRODUZCA.
     inputTeam.addEventListener("change", function() {
-        filter(data.matches);
+        filter(partidos);
     })
 
     // COJO EL 2º INPUT CON SU id Y LO GUARDO EN UNA VARIABLE.
@@ -115,10 +144,10 @@ function addOptions(partidos) {
     }
     // PREPARO EL INPUT PARA EL EVENTO change CON LA FUNCIÓN filter().
     inputResult.addEventListener("change", function() {
-        filter(data.matches);
+        filter(partidos);
     })
 }
-addOptions(data.matches);
+
 
 // FILTRA LOS PARTIDOS (data.matches) POR NOMBRE DE EQUIPO Y POR RESULTADOS.
 function filter(partidos) {
@@ -143,9 +172,16 @@ function filter(partidos) {
         return false;
     })
 
+    //============================================================
+    //============= COMENTAR A LLUIS =============================
+    //==========================================================
+
     // LE DIGO QUE SI NO SE HA ESCOGIDO EQUIPO RETIRE LA CLASE d-none DE LA ALERTA, ENTONCES SE MUESTRA.
-    if (inputTeam.value == "") {
+    if (inputTeam.value == "" && inputResult.value != "") {
         alert.classList.remove('d-none');
+    } else if ((inputTeam.value == "" && inputResult.value == "") || inputTeam.value == "") {
+        crearTablaPartidos(partidos);
+        return
     }
 
     // SI NO ESCOGEMOS NINGÚN RESULTADO MUESTRA UNA TABLA CON TODOS LOS PARTIDOS DEL EQUIPO QUE TENEMOS SELECCIONADO EN EL INPUT 1.

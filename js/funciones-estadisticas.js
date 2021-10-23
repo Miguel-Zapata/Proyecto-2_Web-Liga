@@ -1,3 +1,29 @@
+let api = "d0fb2ac181374b5ea229e7642d2c7ada"
+let url = "https://api.football-data.org/v2/competitions/2014/matches?="
+
+fetch(url, {
+        method: "GET",
+        headers: {
+            "X-Auth-Token": api
+        }
+    })
+    .then(function(response) {
+        if (response.ok) {
+            return response.json();
+        }
+    })
+    .then(function(data) {
+        init(data);
+    })
+    .catch(function(err) {
+        console.error(err);
+    })
+
+function init(data) {
+    addDatos(data.matches);
+    addDatos2(data.matches);
+}
+
 // DATOS PARA LA TABLA 1
 // BUSCAR UN EQUIPO, CREAR UN OBJETO CON SUS DATOS Y AÑADIRLO A UN ARRAY O ACTUALIZAR LOS DATOS SI YA EXISTE.
 function addDatos(partidos) {
@@ -48,7 +74,7 @@ function addDatos(partidos) {
     // LE MANDO EL ARRAY estadisticas A LA FUNCIÓN crearTabla.
     creaTabla(estadisticas);
 }
-addDatos(data.matches);
+
 
 // DATOS PARA LA TABLA 2.
 // LO MISMO QUE EN LA FUNCIÓN ANTERIOR, PERO AÑADIENDO SOLO LOS EQUIPOS QUE JUGARON COMO VISITANTES Y SUMANDOLE LOS GOLES EN CONTRA.
@@ -74,7 +100,7 @@ function addDatos2(partidos2) {
     }
     creaTabla2(estadisticas2);
 }
-addDatos2(data.matches);
+
 
 
 // CREO LA TABLA 1 DE LA MISMA MANERA QUE HICE LA TABLA DE PARTIDOS, PERO CON OTROS DATOS.
