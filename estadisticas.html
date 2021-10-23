@@ -5,25 +5,25 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FAVICON -->
     <link rel="shortcut icon" type="image/png" href="./images/balon-favicon.png" />
+    <!-- LINK CSS DE BOOTSTRAP -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <!-- LINK CSS PROPIO -->
     <link rel="stylesheet" href="./styles/styles.css">
     <title>Estadísticas</title>
 </head>
 
 <body>
-
+    <!-- NAVBAR DE BOOTSTRAP - MODIFICADO -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="./home.html">Proyecto 2 - Web Liga</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
-          </button>
+            </button>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <!-- <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Inicio</a>
-                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link" href="./partidos.html">Partidos</a>
                     </li>
@@ -43,6 +43,8 @@
 
     <div class="container">
         <div class="row justify-content-center">
+
+            <!-- TABLA DE MEDIA DE GOLES A FAVOR - BOOTSTRAP MODIFICADO -->
             <div class="table-responsive col-md-6">
                 <table class="col-12 table mt-5 border border-dark table-hover text-center">
                     <thead class="table-dark">
@@ -51,7 +53,6 @@
                                 Media de goles a Favor </br>
                                 TOP 5
                             </th>
-
                         </tr>
                         <tr>
                             <th colspan="2">Club</th>
@@ -59,15 +60,15 @@
                             <th>GF</th>
                             <th>Media</th>
                         </tr>
-
                     </thead>
+
                     <tbody id="tbodyHome">
 
                     </tbody>
                 </table>
-
             </div>
 
+            <!-- TABLA DE GOLES EN CONTRA COMO VISITANTE - BOOTSTRAP MODIFICADO -->
             <div class="table-responsive col-md-6">
                 <table class="col-12 table mt-5 mb-5 border border-dark table-hover text-center">
                     <thead class="table-dark">
@@ -76,28 +77,27 @@
                                 Cantidad de goles en contra como Visitante </br>
                                 TOP 5
                             </th>
-
                         </tr>
                         <tr>
                             <th colspan="2">Club</th>
                             <th>Partidos</th>
                             <th>GC</th>
                         </tr>
-
                     </thead>
+
                     <tbody id="tbodyAway">
 
                     </tbody>
                 </table>
-
             </div>
         </div>
     </div>
 
 
-
+    <!-- SCRIPT DE BOOTSTRAP -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
+    <!-- SCRIPTS PROPIOS -->
     <script src="./js/datos-partidos.js"></script>
     <script src="./js/funciones-estadisticas.js"></script>
 </body>

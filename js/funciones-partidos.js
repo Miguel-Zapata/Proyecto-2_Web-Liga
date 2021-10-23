@@ -1,50 +1,23 @@
-/* Creo una variable para cada Tag que forma la tabla */
-// let table = document.createElement('table');
-// let thead = document.createElement('thead');
-// let tbody = document.createElement('tbody');
-
-/* Le digo que thead y tbody son hijos de table */
-// table.appendChild(thead)
-// table.appendChild(tbody)
-
-/* Añado table al body. Localizando el body del HTML mediante id y diciendole que table es hijo de body con appendChild */
-// document.getElementById('body').appendChild(table);
-
-/* Creo la primera fila de la tabla(tr), que serán los encabezados. Y le añado las distintas celdas(th) donde pongo el texto con innerHTML */
-/* let fila1 = document.createElement('tr');
-let encabezado1 = document.createElement('th');
-encabezado1.innerHTML = "Equipo Local";
-let encabezado2 = document.createElement('th');
-encabezado2.innerHTML = "Resultados";
-let encabezado3 = document.createElement('th');
-encabezado3.innerHTML = "Equipo Visitante";
-let encabezado4 = document.createElement('th');
-encabezado4.innerHTML = "Fecha";
-let encabezado5 = document.createElement('th');
-encabezado5.innerHTML = "Estado"; */
-
-/* Asigno los encabezados  como hijos de fila1 y fila1 como hijo de thead. Ambos con appendChild */
-/* fila1.appendChild(encabezado1);
-fila1.appendChild(encabezado2);
-fila1.appendChild(encabezado3);
-fila1.appendChild(encabezado4);
-fila1.appendChild(encabezado5);
-document.getElementById('thead').appendChild(fila1); */
-
+// CREA LA TABLA CON TODOS LOS PARTIDOS.
 function crearTablaPartidos(partidos) {
 
+    // OBTENGO LA id DEL tbody PARA PODER INDEXARLO MÁS ADELANTE.
+    // LE AÑADO UNA CLASE PARA HACER MODIFICACIONES EN CSS.
     let tbody = document.getElementById('tbody');
     tbody.setAttribute("class", "tbody_partidos");
+
+    // HAGO UN LOOP POR data.matches PARA CREAR LA TABLA Y AÑADIRLE CONTENIDO.
     for (let i = 0; i < partidos.length; i++) {
         let imagenHome = "<img src='https://crests.football-data.org/" + partidos[i].homeTeam.id + ".svg'/>";
         let imagenAway = "<img src='https://crests.football-data.org/" + partidos[i].awayTeam.id + ".svg'/>";
+
         let filaExtra = document.createElement('tr');
         let celdaExtra1 = document.createElement('td');
         celdaExtra1.innerHTML = partidos[i].homeTeam.name;
-
         let celdaEscudo1 = document.createElement('td');
         celdaEscudo1.innerHTML = imagenHome;
 
+        // EN ESTA CELDA USO UN if PARA CAMBIAR LOS null QUE APARECEN EN LOS PARTIDOS SIN JUGAR Y POSTPUESTOS.
         let celdaExtra2 = document.createElement('td');
         celdaExtra2.innerHTML = `${partidos[i].score.fullTime.homeTeam} - ${partidos[i].score.fullTime.awayTeam}`;
         if (partidos[i].score.fullTime.homeTeam == null && partidos[i].score.fullTime.awayTeam == null) {
@@ -53,12 +26,14 @@ function crearTablaPartidos(partidos) {
 
         let celdaEscudo2 = document.createElement('td');
         celdaEscudo2.innerHTML = imagenAway;
-
-
         let celdaExtra3 = document.createElement('td');
         celdaExtra3.innerHTML = partidos[i].awayTeam.name;
+
+        // AQUI USO substring() PARA RECORTAR LA string DE LA FECHA PORQUE APARECEN MUCHOS DATOS.
         let celdaExtra4 = document.createElement('td');
         celdaExtra4.innerHTML = partidos[i].utcDate.substring(0, 10);
+
+        // AQUI USO if Y else if PARA CAMBIAR LOS VALORES POR DEFECTO DE status POR OTROS MÁS ENTENDIBLES.
         let celdaExtra5 = document.createElement('td');
         celdaExtra5.innerHTML = partidos[i].status;
         if (partidos[i].status == "FINISHED") {
@@ -68,6 +43,8 @@ function crearTablaPartidos(partidos) {
         } else if (partidos[i].status == "SCHEDULED") {
             celdaExtra5.innerHTML = "NO JUGADO"
         }
+
+        // INDEXO LAS CELDAS A LA FILA Y ESTA AL tbody PARA GENERAR LA ESTRUCTURA HTML DE LA TABLA.
         filaExtra.appendChild(celdaExtra1);
         filaExtra.appendChild(celdaEscudo1);
         filaExtra.appendChild(celdaExtra2);
@@ -76,71 +53,88 @@ function crearTablaPartidos(partidos) {
         filaExtra.appendChild(celdaExtra4);
         filaExtra.appendChild(celdaExtra5);
         tbody.appendChild(filaExtra);
-
-
     }
-    console.log(data);
 }
 crearTablaPartidos(data.matches);
 
 
+// AÑADE LAS OPCIONES A LOS INPUTS TIPO SELECT QUE HARÁN DE FILTROS EN LA PAGINA partidos.html.
 function addOptions(partidos) {
     // recorrer el array de partidos Y crear nueva array con los nombres de los equipos sin repetir ordenados por orden alfabetico.
+    // HAGO UN .map POR data.matches PARA OBTENER UN ARRAY CON LOS NOMBRES DE TODOS LOS EQUIPOS.
     let equipos = partidos.map(function(equipo, index, array) {
         return equipo.homeTeam.name;
     });
+    //CON .sort ORDENO ALFABETICAMENTE LOS NOMBRES DE LOS EQUIPOS.
     equipos.sort((a, b) => {
+        // .toLowerCase ME SIRVE PARA QUE NO TENGA EN CUENTA LAS MAYUSCULAS A LA HORA DE ORDENAR Y NO LO ORDENE POR SEPARADO.
         a = a.toLowerCase();
         b = b.toLowerCase();
+        // EL ELEMENTO a IRÁ ANTES QUE EL b.
         if (a < b) {
             return -1;
         }
+        // EL ELEMENTO a IRÁ DESPUÉS QUE EL b.
         if (a > b) {
             return 1;
         }
+        //LOS ELEMENTOS MANTIENEN SU POSICIÓN.
         return 0;
     });
+
+    // QUITO TODOS LOS EQUIPOS REPETIDOS CON new Set().
     equipos = new Set(equipos);
-    // el set no es iterable y hay que convertirlo en array.
+    // AUNQUE EL Set ME DA UN ARRAY, NO ES ITERABLE. ASÍ QUE LO CONVIERTO EN ARRAY CON Array.from().
     equipos = Array.from(equipos);
 
-    // recorrer array de equipos y añadirlos al input.
+    //COJO EL PRIMER INPUT CON LA id Y LO GUARDO EN UNA VARIABLE.
     let inputTeam = document.getElementById('team');
+    // RECORRO EL ARRAY DE EQUIPOS QUE OBTUVE CON Array.from() Y AÑADO LOS NOMBRES COMO OPCIONES DEL SELECT.
     for (i = 0; i < equipos.length; i++) {
-        let option = new Option(equipos[i], equipos[i]);
+        let option = new Option(equipos[i], equipos[i]); // *(text, value).
+        // INDEXO LAS OPCIONES AL INPUT.
         inputTeam.append(option);
     }
+    // PREPARO EL INPUT CON EL EVENTO change PARA QUE ME DE LA FUNCIÓN filter CUANDO SE PRODUZCA.
     inputTeam.addEventListener("change", function() {
         filter(data.matches);
     })
 
+    // COJO EL 2º INPUT CON SU id Y LO GUARDO EN UNA VARIABLE.
     let inputResult = document.getElementById('result');
+    // CREO MANUALMENTE EL ARRAY CON EL NOMBRE DE LAS OPCIONES QUE CONTENDRÁ EL 2º INPUT.
     let optionResult = ["GANA", "PIERDE", "EMPATA", "PROXIMOS"];
+    // RECORRO EL ARRAY DE RESULTADOS Y LOS AÑADO COMO OPCIONES DEL SELECT.
     for (k = 0; k < optionResult.length; k++) {
-        let option = document.createElement("option");
+        let option = document.createElement("option"); // he probado una sintaxis distinta que en la linea 94 para saber hacerlo de las 2 maneras.
         option.value = optionResult[k];
         option.text = optionResult[k];
 
+        // INDEXO LAS OPCIONES AL INPUT.
         inputResult.appendChild(option);
     }
+    // PREPARO EL INPUT PARA EL EVENTO change CON LA FUNCIÓN filter().
     inputResult.addEventListener("change", function() {
         filter(data.matches);
     })
 }
 addOptions(data.matches);
 
+// FILTRA LOS PARTIDOS (data.matches) POR NOMBRE DE EQUIPO Y POR RESULTADOS.
 function filter(partidos) {
+    // COJO LA ALERTA DE ESCOGER EQUIPO CON LA id Y LE AÑADO LA CLASE d-none PARA OCULTARLA POR DEFECTO.
     let alert = document.getElementById('alert');
     alert.classList.add('d-none');
+
+    // COJO LOS 2 INPUTS CON SU id.
     let inputTeam = document.getElementById('team');
     let inputResult = document.getElementById('result');
-    //.value me muestra el valor de la option que tengo seleccionada en el input.
-    // console.log(inputTeam.value);
 
-    // filter me devuelve un array con todos los partidos en los que juega el equipo que seleccione.
+    // HAGO UN partidos.filter PARA QUE FILTRE EL NOMBRE DE EQUIPO COINCIDIENDO CON EL VALOR (.value) DEL INPUT CORRESPONDIENTE.
+    // .filter ME DEVUELVE UN ARRAY QUE GUARDO EN LA VARIABLE equipo.
     let equipo = partidos.filter(function(partido, i, array) {
+        // EN LOS if TENGO QUE ESPECIFICAR QUE QUIERO QUE ME DEVUELVA true EN LAS COMPARACIONES
         if (partido.awayTeam.name == inputTeam.value) {
-            // le tengo que decir si la comparación es true o false, si no, pasa de mi cara
             return true;
         }
         if (partido.homeTeam.name == inputTeam.value) {
@@ -148,74 +142,84 @@ function filter(partidos) {
         }
         return false;
     })
+
+    // LE DIGO QUE SI NO SE HA ESCOGIDO EQUIPO RETIRE LA CLASE d-none DE LA ALERTA, ENTONCES SE MUESTRA.
     if (inputTeam.value == "") {
         alert.classList.remove('d-none');
-        // window.alert("¡CUIDADO! No has seleccionado un Equipo");
     }
 
+    // SI NO ESCOGEMOS NINGÚN RESULTADO MUESTRA UNA TABLA CON TODOS LOS PARTIDOS DEL EQUIPO QUE TENEMOS SELECCIONADO EN EL INPUT 1.
     if (inputResult.value == "") {
         creaTablaFiltrada(equipo);
-        return
+        return // este return es para que deje de leer el codigo despues de esta condición.
     }
 
-
+    // HAGO UN .filter DEL PRIMER .filter. ASÍ ESTOY FILTRANDO POR RESULTADO DENTRO DEL NOMBRE DE EQUIPO QUE TENGA SELECCIONADO EN EL INPUT 1.
     let results = equipo.filter(function(partido) {
-        if (partido.score.winner == "DRAW" && inputResult.value == "EMPATA") {
-            return true; //empate
-        } else if (partido.score.winner == null && inputResult.value == "PROXIMOS") {
-            return true; //proximos
-        } else if ((partido.homeTeam.name == inputTeam.value && partido.score.fullTime.homeTeam > partido.score.fullTime.awayTeam) && inputResult.value == "GANA") {
-            return true; //gana
-        } else if ((partido.awayTeam.name == inputTeam.value && partido.score.fullTime.awayTeam > partido.score.fullTime.homeTeam) && inputResult.value == "GANA") {
-            return true; // gana
-        } else if ((partido.homeTeam.name == inputTeam.value && partido.score.fullTime.homeTeam < partido.score.fullTime.awayTeam) && inputResult.value == "PIERDE") {
-            return true; //pierde
-        } else if ((partido.awayTeam.name == inputTeam.value && partido.score.fullTime.awayTeam < partido.score.fullTime.homeTeam) && inputResult.value == "PIERDE") {
-            return true; // pierde
-        } else {
-            return false;
-        }
+            // ESPECIFICO CADA COMPARACIÓN CON return true SEGÚN ME INTERSA PARA QUE APAREZCAN SOLO LOS PARTIDOS CUYO 
+            // RESULTADO COINCIDA CON LO SELECCIONADO EN EL INPUT 2.
+            if (partido.score.winner == "DRAW" && inputResult.value == "EMPATA") {
+                return true; //empate
+            } else if (partido.score.winner == null && inputResult.value == "PROXIMOS") {
+                return true; //proximos
+            } else if ((partido.homeTeam.name == inputTeam.value && partido.score.fullTime.homeTeam > partido.score.fullTime.awayTeam) && inputResult.value == "GANA") {
+                return true; //gana
+            } else if ((partido.awayTeam.name == inputTeam.value && partido.score.fullTime.awayTeam > partido.score.fullTime.homeTeam) && inputResult.value == "GANA") {
+                return true; // gana
+            } else if ((partido.homeTeam.name == inputTeam.value && partido.score.fullTime.homeTeam < partido.score.fullTime.awayTeam) && inputResult.value == "PIERDE") {
+                return true; //pierde
+            } else if ((partido.awayTeam.name == inputTeam.value && partido.score.fullTime.awayTeam < partido.score.fullTime.homeTeam) && inputResult.value == "PIERDE") {
+                return true; // pierde
+            } else {
+                return false;
+            }
 
-    })
+        })
+        // CON UN EQUIPO Y UN RESULTADO SELECCIONADO MUETSRA UNA TABLA CON EL ARRAY QUE TENEMOS GUARDADO EN results.
     creaTablaFiltrada(results);
 }
 
-function creaTablaFiltrada(partido) { // cambiar partido por partido
+// CREA UNA TABLA CON LOS FILTROS QUE SELECCIONE EN LOS INPUTS.
+function creaTablaFiltrada(partido) {
+    // COJO LA ALERTA 2 CON SU id Y LE ASIGNO LA CLASE d-none PARA OCULTARLA POR DEFECTO.
     let alert2 = document.getElementById('alert2');
     alert2.classList.add('d-none');
+    // COJO EL INPUT DE EQUIPOS POR SU id PARA PODER USARLO EN ESTA FUNCIÓN.
     let inputTeam = document.getElementById('team');
+    // COJO EL tbody POR SU id PARA PODER USARLO EN ESTA FUNCIÓN.
     let tbody = document.getElementById('tbody');
+    // HAGO QUE EL tbody ESTÉ VACÍO PARA PODER CREAR UNA TABLA EN EL.
     tbody.innerHTML = "";
+
+    // LE DIGO QUE SI EL ARRAY QUE ME LLEGA CON LOS FILTROS SELECCIONADOS EN LOS INPUTS ESTÁ VACÍO LE QUITE LA CLASE d-none A
+    // LA ALERTA 2. ASÍ SE MUESTRA.
     if (partido.length == 0 && inputTeam.value !== "") {
         alert2.classList.remove('d-none');
     }
+
+    // RECORRO EL ARRAY QUE ME LLEGA FILTRADO POR LOS INPUTS Y CREO UNA TABLA CON EL CONTENIDO CORRESPONDIENTE.
+    // BASICAMENTE ES IDENTICA A LA PRIMERA TABLA, PERO SOLO MUESTRA EL CONTENIDO CON EL EQUIPO Y EL RESULTADO QUE HAYAMOS SELECCIONADO.
     for (j = 0; j < partido.length; j++) {
         let imagenHome = "<img src='https://crests.football-data.org/" + partido[j].homeTeam.id + ".svg'/>";
         let imagenAway = "<img src='https://crests.football-data.org/" + partido[j].awayTeam.id + ".svg'/>";
 
         let fila = document.createElement('tr');
-        //partido loccal
+
         let celda1 = document.createElement('td');
         celda1.innerHTML = partido[j].homeTeam.name;
-        //escudo local
         let celda2 = document.createElement('td');
         celda2.innerHTML = imagenHome;
-        //resultado
         let celda3 = document.createElement('td');
         celda3.innerHTML = `${partido[j].score.fullTime.homeTeam} - ${partido[j].score.fullTime.awayTeam}`;
         if (partido[j].score.fullTime.homeTeam == null && partido[j].score.fullTime.awayTeam == null) {
             celda3.innerHTML = 'sin jugar';
         }
-        //escudo away
         let celda4 = document.createElement('td');
         celda4.innerHTML = imagenAway;
-        // partido away
         let celda5 = document.createElement('td');
         celda5.innerHTML = partido[j].awayTeam.name;
-        //fecha
         let celda6 = document.createElement('td');
         celda6.innerHTML = partido[j].utcDate.substring(0, 10);
-        // estado
         let celda7 = document.createElement('td');
         celda7.innerHTML = partido[j].status;
         if (partido[j].status == "FINISHED") {
@@ -225,7 +229,6 @@ function creaTablaFiltrada(partido) { // cambiar partido por partido
         } else if (partido[j].status == "SCHEDULED") {
             celda7.innerHTML = "NO JUGADO"
         }
-
         tbody.appendChild(fila);
         fila.appendChild(celda1);
         fila.appendChild(celda2);
@@ -235,5 +238,4 @@ function creaTablaFiltrada(partido) { // cambiar partido por partido
         fila.appendChild(celda6);
         fila.appendChild(celda7);
     }
-    console.log(partido);
 }
