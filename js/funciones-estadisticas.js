@@ -24,6 +24,12 @@ function init(data) {
     addDatos2(data.matches);
 }
 
+//PARA QUE EL LOADER DESAPAREZCA.
+let loader = getElementById('loader');
+window.addEventListener("load", function() {
+    loader.classList.add('d-none');
+})
+
 // DATOS PARA LA TABLA 1
 // BUSCAR UN EQUIPO, CREAR UN OBJETO CON SUS DATOS Y AÑADIRLO A UN ARRAY O ACTUALIZAR LOS DATOS SI YA EXISTE.
 function addDatos(partidos) {

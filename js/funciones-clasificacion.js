@@ -23,27 +23,35 @@ function init(data) {
     crearTablaClasificaciones(data.standings[0].table);
 }
 
+//PARA QUE EL LOADER DESAPAREZCA.
+let loader = getElementById('loader');
+window.addEventListener("load", function() {
+    loader.classList.add('d-none');
+})
+
+// CREA LA TABLA DE CLASIFICACIÓN
 function crearTablaClasificaciones(clasificaciones) {
+    // COJO LA id DEL tbody PARA INDEXARLO MÁS ADELANTE.
     let tbody = document.getElementById('tbody');
     tbody.setAttribute("class", "tbody_clasificacion");
 
-    // Por cada equipo
+    // ITERO POR LOS EQUIPOS Y CREO UNA FILA
     for (let i = 0; i < clasificaciones.length; i++) {
-        // Creo una fila
         let positionRow = document.createElement('tr');
-        // Creo un Array con datos nuevos que corresponden a la i de clasificaciones.length
+
+        // CREO UN ARRAY CON LOS DATOS QUE NECESITO MOSTRAR EN LA TABLA
         let array = [clasificaciones[i].position, `<img src="${clasificaciones[i].team.crestUrl}"/>`, clasificaciones[i].team.name, clasificaciones[i].playedGames, clasificaciones[i].won, clasificaciones[i].draw, clasificaciones[i].lost, clasificaciones[i].goalsFor, clasificaciones[i].goalsAgainst, clasificaciones[i].goalDifference, clasificaciones[i].points, clasificaciones[i].form];
 
         //  Por cada fila creo celdas nuevas. ¿cuantas? Tantas como clasificaciones tenga array
+        // CREO 1 CELDA POR CADA ELEMENTO DEL ARRAY Y LE AGREGO EL CONTENIDO QUE CORRESPONDE.
         for (let j = 0; j < array.length; j++) {
-            // Creo una celda
             let celda = document.createElement('td');
-            // Introduce contenido en la celda.
             celda.innerHTML = array[j];
-            // Anida la celda dentro de la tr. celda es hijo de positionRow.
+            // INDEXO LAS CELDAS A LAS FILAS EN EL BUCLE QUE CREA LAS CELDAS.
             positionRow.appendChild(celda);
         }
-        // Fuera del Bucle J, pero dentro del bucle que hace las lineas. Abnido las filas dentro del tbody.
+
+        // INDEXO LAS FILAS AL tbody EN EL BUCLE QUE CREA LAS FILAS.
         tbody.appendChild(positionRow);
     }
 }

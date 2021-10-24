@@ -25,6 +25,12 @@ function init(data) {
     filter(data.matches);
 }
 
+//PARA QUE EL LOADER DESAPAREZCA.
+let loader = getElementById('loader');
+window.addEventListener("load", function() {
+    loader.classList.add('d-none');
+})
+
 // CREA LA TABLA CON TODOS LOS PARTIDOS.
 function crearTablaPartidos(partidos) {
 
