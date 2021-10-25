@@ -22,13 +22,10 @@ fetch(url, {
 function init(data) {
     addDatos(data.matches);
     addDatos2(data.matches);
-}
 
-//PARA QUE EL LOADER DESAPAREZCA.
-let loader = getElementById('loader');
-window.addEventListener("load", function() {
+    let loader = document.getElementById('loader');
     loader.classList.add('d-none');
-})
+}
 
 // DATOS PARA LA TABLA 1
 // BUSCAR UN EQUIPO, CREAR UN OBJETO CON SUS DATOS Y AÑADIRLO A UN ARRAY O ACTUALIZAR LOS DATOS SI YA EXISTE.

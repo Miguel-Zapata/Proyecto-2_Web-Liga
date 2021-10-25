@@ -23,12 +23,16 @@ function init(data) {
     crearTablaPartidos(data.matches);
     addOptions(data.matches);
     filter(data.matches);
+
+    let loader = document.getElementById('loader');
+    loader.classList.add('d-none');
 }
 
 //PARA QUE EL LOADER DESAPAREZCA.
 let loader = getElementById('loader');
 window.addEventListener("load", function() {
-    loader.classList.add('d-none');
+    loader.hide();
+    // loader.classList.add('d-none');
 })
 
 // CREA LA TABLA CON TODOS LOS PARTIDOS.
@@ -37,8 +41,8 @@ function crearTablaPartidos(partidos) {
     // OBTENGO LA id DEL tbody PARA PODER INDEXARLO MÁS ADELANTE.
     // LE AÑADO UNA CLASE PARA HACER MODIFICACIONES EN CSS.
     let tbody = document.getElementById('tbody');
-    let loader = document.getElementById('loader')
     tbody.setAttribute("class", "tbody_partidos");
+    tbody.innerHTML = "";
 
     // HAGO UN LOOP POR data.matches PARA CREAR LA TABLA Y AÑADIRLE CONTENIDO.
     for (let i = 0; i < partidos.length; i++) {
@@ -87,11 +91,8 @@ function crearTablaPartidos(partidos) {
         filaExtra.appendChild(celdaExtra4);
         filaExtra.appendChild(celdaExtra5);
         tbody.appendChild(filaExtra);
-        tbody.append(loader);
     }
 }
-
-
 
 // AÑADE LAS OPCIONES A LOS INPUTS TIPO SELECT QUE HARÁN DE FILTROS EN LA PAGINA partidos.html.
 function addOptions(partidos) {
@@ -165,6 +166,11 @@ function filter(partidos) {
     let inputTeam = document.getElementById('team');
     let inputResult = document.getElementById('result');
 
+    if (inputTeam.value == "") {
+        crearTablaPartidos(partidos);
+        return
+    }
+
     // HAGO UN partidos.filter PARA QUE FILTRE EL NOMBRE DE EQUIPO COINCIDIENDO CON EL VALOR (.value) DEL INPUT CORRESPONDIENTE.
     // .filter ME DEVUELVE UN ARRAY QUE GUARDO EN LA VARIABLE equipo.
     let equipo = partidos.filter(function(partido, i, array) {
@@ -178,16 +184,9 @@ function filter(partidos) {
         return false;
     })
 
-    //============================================================
-    //============= COMENTAR A LLUIS =============================
-    //==========================================================
-
     // LE DIGO QUE SI NO SE HA ESCOGIDO EQUIPO RETIRE LA CLASE d-none DE LA ALERTA, ENTONCES SE MUESTRA.
     if (inputTeam.value == "" && inputResult.value != "") {
         alert.classList.remove('d-none');
-    } else if ((inputTeam.value == "" && inputResult.value == "") || inputTeam.value == "") {
-        crearTablaPartidos(partidos);
-        return
     }
 
     // SI NO ESCOGEMOS NINGÚN RESULTADO MUESTRA UNA TABLA CON TODOS LOS PARTIDOS DEL EQUIPO QUE TENEMOS SELECCIONADO EN EL INPUT 1.
@@ -219,6 +218,7 @@ function filter(partidos) {
         })
         // CON UN EQUIPO Y UN RESULTADO SELECCIONADO MUETSRA UNA TABLA CON EL ARRAY QUE TENEMOS GUARDADO EN results.
     creaTablaFiltrada(results);
+
 }
 
 // CREA UNA TABLA CON LOS FILTROS QUE SELECCIONE EN LOS INPUTS.

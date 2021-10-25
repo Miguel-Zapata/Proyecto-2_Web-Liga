@@ -21,6 +21,9 @@ fetch(url, {
 
 function init(data) {
     crearTablaClasificaciones(data.standings[0].table);
+
+    let loader = document.getElementById('loader');
+    loader.classList.add('d-none');
 }
 
 //PARA QUE EL LOADER DESAPAREZCA.
