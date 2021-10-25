@@ -149,7 +149,6 @@ function addOptions(partidos) {
     })
 }
 
-
 // FILTRA LOS PARTIDOS (data.matches) POR NOMBRE DE EQUIPO Y POR RESULTADOS.
 function filter(partidos) {
     // COJO LA ALERTA DE ESCOGER EQUIPO CON LA id Y LE AÑADO LA CLASE d-none PARA OCULTARLA POR DEFECTO.
@@ -159,6 +158,11 @@ function filter(partidos) {
     // COJO LOS 2 INPUTS CON SU id.
     let inputTeam = document.getElementById('team');
     let inputResult = document.getElementById('result');
+
+    // LE DIGO QUE SI NO SE HA ESCOGIDO EQUIPO RETIRE LA CLASE d-none DE LA ALERTA, ENTONCES SE MUESTRA.
+    if (inputTeam.value == "" && inputResult.value != "") {
+        alert.classList.remove('d-none');
+    }
 
     if (inputTeam.value == "") {
         crearTablaPartidos(partidos);
@@ -178,10 +182,7 @@ function filter(partidos) {
         return false;
     })
 
-    // LE DIGO QUE SI NO SE HA ESCOGIDO EQUIPO RETIRE LA CLASE d-none DE LA ALERTA, ENTONCES SE MUESTRA.
-    if (inputTeam.value == "" && inputResult.value != "") {
-        alert.classList.remove('d-none');
-    }
+
 
     // SI NO ESCOGEMOS NINGÚN RESULTADO MUESTRA UNA TABLA CON TODOS LOS PARTIDOS DEL EQUIPO QUE TENEMOS SELECCIONADO EN EL INPUT 1.
     if (inputResult.value == "") {
