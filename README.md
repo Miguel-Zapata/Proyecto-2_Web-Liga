@@ -3,6 +3,9 @@ Segundo proyecto del Bootcam de Let's Coder para FullSatck Developer.
 
 Esta vez debía crear una web con los datos de la liga española de futbol aprendiendo a usar una API, Bootstrap, Array Methods y Function Arrows.
 ***
+## **Demo del proyecto.**
+[Si haces click Aquí podrás ver una demo funcional del Proyecto en su versión final.](https://letsco-proyect2.netlify.app)
+***
 ## **MVP**
 **1. La web debe contener**
   - 4 páginas HTNML: Home, Partidos, Clasificación, Estadísticas.
@@ -24,11 +27,6 @@ Esta vez debía crear una web con los datos de la liga española de futbol apren
   - Mostrará 2 tablas.
     - La tabla 1 mostrará el TOP 5 de quipos con mejor media de goles.
     - La tabla 2 mostrará el TOP 5 de equipos con menos goles en contra.
-***
-
-## **Demo del proyecto.**
-[Si haces click Aquí podrás ver una demo funcional del Proyecto en su versión final.](https://letsco-proyect2.netlify.app)
-
 ***
 ## **Herramientas utilizadas.**
 - [Visual Studio Code](https://code.visualstudio.com/)
