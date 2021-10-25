@@ -23,6 +23,7 @@ function init(data) {
     addDatos(data.matches);
     addDatos2(data.matches);
 
+    // PARA QUE DESAPAREZCA EL loader CUANDO CARGA LOS DATOS.
     let loader = document.getElementById('loader');
     loader.classList.add('d-none');
 }

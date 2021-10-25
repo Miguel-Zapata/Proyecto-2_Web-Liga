@@ -22,15 +22,10 @@ fetch(url, {
 function init(data) {
     crearTablaClasificaciones(data.standings[0].table);
 
+    // PARA QUE EL loader DESAPAREZCA CUANDO CARGA LOS DATOS.
     let loader = document.getElementById('loader');
     loader.classList.add('d-none');
 }
-
-//PARA QUE EL LOADER DESAPAREZCA.
-let loader = getElementById('loader');
-window.addEventListener("load", function() {
-    loader.classList.add('d-none');
-})
 
 // CREA LA TABLA DE CLASIFICACIÓN
 function crearTablaClasificaciones(clasificaciones) {

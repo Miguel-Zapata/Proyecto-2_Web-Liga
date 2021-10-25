@@ -24,16 +24,10 @@ function init(data) {
     addOptions(data.matches);
     filter(data.matches);
 
+    // PARA QUE EL loader DESAPAREZCA CUABNDO CARGA LOS DATOS.
     let loader = document.getElementById('loader');
     loader.classList.add('d-none');
 }
-
-//PARA QUE EL LOADER DESAPAREZCA.
-let loader = getElementById('loader');
-window.addEventListener("load", function() {
-    loader.hide();
-    // loader.classList.add('d-none');
-})
 
 // CREA LA TABLA CON TODOS LOS PARTIDOS.
 function crearTablaPartidos(partidos) {
@@ -142,7 +136,7 @@ function addOptions(partidos) {
     let optionResult = ["GANA", "PIERDE", "EMPATA", "PROXIMOS"];
     // RECORRO EL ARRAY DE RESULTADOS Y LOS AÑADO COMO OPCIONES DEL SELECT.
     for (k = 0; k < optionResult.length; k++) {
-        let option = document.createElement("option"); // he probado una sintaxis distinta que en la linea 94 para saber hacerlo de las 2 maneras.
+        let option = document.createElement("option"); // he probado una sintaxis distinta que en la linea 124 para saber hacerlo de las 2 maneras.
         option.value = optionResult[k];
         option.text = optionResult[k];
 
