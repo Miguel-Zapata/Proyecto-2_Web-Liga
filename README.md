@@ -9,12 +9,12 @@ Esta vez debía crear una web con los datos de la liga española de futbol apren
   - Navbar insertada desde Bootstrap.
   - Debe ser Responsive.
   
-**2. Partidos debe mostrar:** 
-  - Tabla de todos los partidos con la información siguiente: equipo local, resultado, equipo visitante, fecha y estado.
+**2. Partidos:** 
+  - Tabla mostrando de todos los partidos con la información siguiente: equipo local, resultado, equipo visitante, fecha y estado.
   - 2 inputs para filtrar la busqueda por Equipos y Resultados.
   - 2 alertas distintas.
-    - para cuando seleccionamos un resultado sin haber escogido un equipo.
-    - para cuando no existen resultados para la busqueda.
+    - Cuando seleccionamos un resultado sin haber escogido un equipo.
+    - Cuando no existen resultados para la busqueda.
   
 **3. Clasificación:**
   - Tabla mostrando los 20 equipos con los siguientes datos: Posición, Nombre de equipo, Partidos jugados, Victorias, Empates, Derrotas, Goles a favor, Goles en contra, Diferencia de goles, Últimos 5.
@@ -36,14 +36,15 @@ Esta vez debía crear una web con los datos de la liga española de futbol apren
 - [Trello](https://trello.com/)
 - [Netlify](https://www.netlify.com/)
 - [Validator de W3C](https://validator.w3.org/)
+- [Postman](https://www.postman.com/)
+- [Bootstrap](https://getbootstrap.com/)
 ***
 ## **Agradecimientos.**
-A Lluís Gracía por la paciencia y su saber hacer.  
+A mi mentor Lluís por pillar mis errores al vuelo.
 
-A mis compañeros de Bootcamp por su inestimable ayuda, la compañía y las risas.  
+A mis compis de Bootcamp por los animos y buenos ratos.
 
-A ti, que te has interesado por este humilde proyecto.
+Y como siempre a ti, por interesarte en mi trabajo.
 ### Gracias
-***
 ***
 Miguel Zapata
