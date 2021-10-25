@@ -1,5 +1,6 @@
 # <font size="6">**Proyecto 2 - Web Liga**</font>
 Segundo proyecto del Bootcam de Let's Coder para FullSatck Developer.
+
 Esta vez debía crear una web con los datos de la liga española de futbol aprendiendo a usar una API, Bootstrap, Array Methods y Function Arrows.
 ***
 ## **MVP**
