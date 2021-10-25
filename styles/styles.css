@@ -1,0 +1,95 @@
+.aqui {
+    font-weight: bold;
+}
+
+.home_title {
+    text-align: center;
+    color: snow;
+    font-weight: bold;
+}
+
+.carousel {
+    max-width: 100%;
+}
+
+body {
+    background-image: url(../images/football-blur10.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    background-color: #16161d;
+}
+
+table {
+    background-color: #fffafad8;
+}
+
+img {
+    width: 30px;
+}
+
+.th_date {
+    width: 130px;
+}
+
+tbody.tbody_partidos tr :first-child {
+    text-align: right;
+}
+
+tbody.tbody_partidos tr :nth-child(2n) {
+    text-align: right;
+}
+
+tbody.tbody_partidos tr :nth-child(3n) {
+    text-align: center;
+}
+
+tbody.tbody_partidos tr :nth-child(4n) {
+    text-align: left;
+}
+
+tbody.tbody_partidos tr :nth-child(6n) {
+    text-align: center;
+}
+
+tbody.tbody_partidos tr :last-child {
+    text-align: center;
+}
+
+tbody.tbody_clasificacion tr :first-child {
+    text-align: right;
+}
+
+tbody.tbody_clasificacion tr :nth-child(2n) {
+    text-align: left;
+}
+
+tbody.tbody_clasificacion tr :nth-child(3n) {
+    text-align: left;
+}
+
+tbody.tbody_clasificacion tr :nth-child(n+4) {
+    text-align: center;
+}
+
+tbody#tbodyHome tr :nth-child(2n) {
+    text-align: left;
+}
+
+tbody#tbodyHome tr :nth-child(n+3) {
+    text-align: center;
+}
+
+tbody#tbodyAway tr :nth-child(2n) {
+    text-align: left;
+}
+
+tbody#tbodyAway tr :nth-child(n+3) {
+    text-align: center;
+}
+
+.alert {
+    color: #16161d;
+    background-color: rgb(255, 231, 125);
+}
