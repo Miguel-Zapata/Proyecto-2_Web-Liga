@@ -1,3 +1,34 @@
+let api = "d0fb2ac181374b5ea229e7642d2c7ada"
+let url = "https://api.football-data.org/v2/competitions/2014/matches?="
+
+fetch(url, {
+        method: "GET",
+        headers: {
+            "X-Auth-Token": api
+        }
+    })
+    .then(function(response) {
+        if (response.ok) {
+            return response.json();
+        }
+    })
+    .then(function(data) {
+        init(data);
+    })
+    .catch(function(err) {
+        console.error(err);
+    })
+
+function init(data) {
+    crearTablaPartidos(data.matches);
+    addOptions(data.matches);
+    filter(data.matches);
+
+    // PARA QUE EL loader DESAPAREZCA CUABNDO CARGA LOS DATOS.
+    let loader = document.getElementById('loader');
+    loader.classList.add('d-none');
+}
+
 // CREA LA TABLA CON TODOS LOS PARTIDOS.
 function crearTablaPartidos(partidos) {
 
@@ -5,6 +36,7 @@ function crearTablaPartidos(partidos) {
     // LE AÑADO UNA CLASE PARA HACER MODIFICACIONES EN CSS.
     let tbody = document.getElementById('tbody');
     tbody.setAttribute("class", "tbody_partidos");
+    tbody.innerHTML = "";
 
     // HAGO UN LOOP POR data.matches PARA CREAR LA TABLA Y AÑADIRLE CONTENIDO.
     for (let i = 0; i < partidos.length; i++) {
@@ -55,8 +87,6 @@ function crearTablaPartidos(partidos) {
         tbody.appendChild(filaExtra);
     }
 }
-crearTablaPartidos(data.matches);
-
 
 // AÑADE LAS OPCIONES A LOS INPUTS TIPO SELECT QUE HARÁN DE FILTROS EN LA PAGINA partidos.html.
 function addOptions(partidos) {
@@ -97,7 +127,7 @@ function addOptions(partidos) {
     }
     // PREPARO EL INPUT CON EL EVENTO change PARA QUE ME DE LA FUNCIÓN filter CUANDO SE PRODUZCA.
     inputTeam.addEventListener("change", function() {
-        filter(data.matches);
+        filter(partidos);
     })
 
     // COJO EL 2º INPUT CON SU id Y LO GUARDO EN UNA VARIABLE.
@@ -106,7 +136,7 @@ function addOptions(partidos) {
     let optionResult = ["GANA", "PIERDE", "EMPATA", "PROXIMOS"];
     // RECORRO EL ARRAY DE RESULTADOS Y LOS AÑADO COMO OPCIONES DEL SELECT.
     for (k = 0; k < optionResult.length; k++) {
-        let option = document.createElement("option"); // he probado una sintaxis distinta que en la linea 94 para saber hacerlo de las 2 maneras.
+        let option = document.createElement("option"); // he probado una sintaxis distinta que en la linea 124 para saber hacerlo de las 2 maneras.
         option.value = optionResult[k];
         option.text = optionResult[k];
 
@@ -115,10 +145,10 @@ function addOptions(partidos) {
     }
     // PREPARO EL INPUT PARA EL EVENTO change CON LA FUNCIÓN filter().
     inputResult.addEventListener("change", function() {
-        filter(data.matches);
+        filter(partidos);
     })
 }
-addOptions(data.matches);
+
 
 // FILTRA LOS PARTIDOS (data.matches) POR NOMBRE DE EQUIPO Y POR RESULTADOS.
 function filter(partidos) {
@@ -129,6 +159,11 @@ function filter(partidos) {
     // COJO LOS 2 INPUTS CON SU id.
     let inputTeam = document.getElementById('team');
     let inputResult = document.getElementById('result');
+
+    if (inputTeam.value == "") {
+        crearTablaPartidos(partidos);
+        return
+    }
 
     // HAGO UN partidos.filter PARA QUE FILTRE EL NOMBRE DE EQUIPO COINCIDIENDO CON EL VALOR (.value) DEL INPUT CORRESPONDIENTE.
     // .filter ME DEVUELVE UN ARRAY QUE GUARDO EN LA VARIABLE equipo.
@@ -144,7 +179,7 @@ function filter(partidos) {
     })
 
     // LE DIGO QUE SI NO SE HA ESCOGIDO EQUIPO RETIRE LA CLASE d-none DE LA ALERTA, ENTONCES SE MUESTRA.
-    if (inputTeam.value == "") {
+    if (inputTeam.value == "" && inputResult.value != "") {
         alert.classList.remove('d-none');
     }
 
@@ -177,6 +212,7 @@ function filter(partidos) {
         })
         // CON UN EQUIPO Y UN RESULTADO SELECCIONADO MUETSRA UNA TABLA CON EL ARRAY QUE TENEMOS GUARDADO EN results.
     creaTablaFiltrada(results);
+
 }
 
 // CREA UNA TABLA CON LOS FILTROS QUE SELECCIONE EN LOS INPUTS.
