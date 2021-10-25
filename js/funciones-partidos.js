@@ -155,6 +155,10 @@ function filter(partidos) {
     let alert = document.getElementById('alert');
     alert.classList.add('d-none');
 
+    // COJO LA ALERTA 2 CON SU id Y LE ASIGNO LA CLASE d-none PARA OCULTARLA POR DEFECTO.
+    let alert2 = document.getElementById('alert2');
+    alert2.classList.add('d-none');
+
     // COJO LOS 2 INPUTS CON SU id.
     let inputTeam = document.getElementById('team');
     let inputResult = document.getElementById('result');
@@ -182,8 +186,6 @@ function filter(partidos) {
         return false;
     })
 
-
-
     // SI NO ESCOGEMOS NINGÚN RESULTADO MUESTRA UNA TABLA CON TODOS LOS PARTIDOS DEL EQUIPO QUE TENEMOS SELECCIONADO EN EL INPUT 1.
     if (inputResult.value == "") {
         creaTablaFiltrada(equipo);
@@ -192,35 +194,33 @@ function filter(partidos) {
 
     // HAGO UN .filter DEL PRIMER .filter. ASÍ ESTOY FILTRANDO POR RESULTADO DENTRO DEL NOMBRE DE EQUIPO QUE TENGA SELECCIONADO EN EL INPUT 1.
     let results = equipo.filter(function(partido) {
-            // ESPECIFICO CADA COMPARACIÓN CON return true SEGÚN ME INTERSA PARA QUE APAREZCAN SOLO LOS PARTIDOS CUYO 
-            // RESULTADO COINCIDA CON LO SELECCIONADO EN EL INPUT 2.
-            if (partido.score.winner == "DRAW" && inputResult.value == "EMPATA") {
-                return true; //empate
-            } else if (partido.score.winner == null && inputResult.value == "PROXIMOS") {
-                return true; //proximos
-            } else if ((partido.homeTeam.name == inputTeam.value && partido.score.fullTime.homeTeam > partido.score.fullTime.awayTeam) && inputResult.value == "GANA") {
-                return true; //gana
-            } else if ((partido.awayTeam.name == inputTeam.value && partido.score.fullTime.awayTeam > partido.score.fullTime.homeTeam) && inputResult.value == "GANA") {
-                return true; // gana
-            } else if ((partido.homeTeam.name == inputTeam.value && partido.score.fullTime.homeTeam < partido.score.fullTime.awayTeam) && inputResult.value == "PIERDE") {
-                return true; //pierde
-            } else if ((partido.awayTeam.name == inputTeam.value && partido.score.fullTime.awayTeam < partido.score.fullTime.homeTeam) && inputResult.value == "PIERDE") {
-                return true; // pierde
-            } else {
-                return false;
-            }
+        // ESPECIFICO CADA COMPARACIÓN CON return true SEGÚN ME INTERSA PARA QUE APAREZCAN SOLO LOS PARTIDOS CUYO 
+        // RESULTADO COINCIDA CON LO SELECCIONADO EN EL INPUT 2.
+        if (partido.score.winner == "DRAW" && inputResult.value == "EMPATA") {
+            return true; //empate
+        } else if (partido.score.winner == null && inputResult.value == "PROXIMOS") {
+            return true; //proximos
+        } else if ((partido.homeTeam.name == inputTeam.value && partido.score.fullTime.homeTeam > partido.score.fullTime.awayTeam) && inputResult.value == "GANA") {
+            return true; //gana
+        } else if ((partido.awayTeam.name == inputTeam.value && partido.score.fullTime.awayTeam > partido.score.fullTime.homeTeam) && inputResult.value == "GANA") {
+            return true; // gana
+        } else if ((partido.homeTeam.name == inputTeam.value && partido.score.fullTime.homeTeam < partido.score.fullTime.awayTeam) && inputResult.value == "PIERDE") {
+            return true; //pierde
+        } else if ((partido.awayTeam.name == inputTeam.value && partido.score.fullTime.awayTeam < partido.score.fullTime.homeTeam) && inputResult.value == "PIERDE") {
+            return true; // pierde
+        } else {
+            return false;
+        }
 
-        })
-        // CON UN EQUIPO Y UN RESULTADO SELECCIONADO MUETSRA UNA TABLA CON EL ARRAY QUE TENEMOS GUARDADO EN results.
+    })
+
+    // CON UN EQUIPO Y UN RESULTADO SELECCIONADO MUETSRA UNA TABLA CON EL ARRAY QUE TENEMOS GUARDADO EN results.
     creaTablaFiltrada(results);
-
 }
 
 // CREA UNA TABLA CON LOS FILTROS QUE SELECCIONE EN LOS INPUTS.
 function creaTablaFiltrada(partido) {
-    // COJO LA ALERTA 2 CON SU id Y LE ASIGNO LA CLASE d-none PARA OCULTARLA POR DEFECTO.
     let alert2 = document.getElementById('alert2');
-    alert2.classList.add('d-none');
     // COJO EL INPUT DE EQUIPOS POR SU id PARA PODER USARLO EN ESTA FUNCIÓN.
     let inputTeam = document.getElementById('team');
     // COJO EL tbody POR SU id PARA PODER USARLO EN ESTA FUNCIÓN.
