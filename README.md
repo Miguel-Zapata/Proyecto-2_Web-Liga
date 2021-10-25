@@ -9,8 +9,9 @@ Esta vez debía crear una web con los datos de la liga española de futbol apren
 ## **MVP**
 **1. La web debe contener**
   - 4 páginas HTNML: Home, Partidos, Clasificación, Estadísticas.
-  - Un loader que se muestre mientras se cargan los datos de la API.
   - Navbar insertada desde Bootstrap.
+  - Los datos de los partidos deben provenir de una API externa.
+  - Un loader que se muestre mientras se cargan los datos de la API.
   - Debe ser Responsive.
   
 **2. Partidos:** 
