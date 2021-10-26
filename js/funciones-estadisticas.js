@@ -79,7 +79,6 @@ function addDatos(partidos) {
     creaTabla(estadisticas);
 }
 
-
 // DATOS PARA LA TABLA 2.
 // LO MISMO QUE EN LA FUNCIÓN ANTERIOR, PERO AÑADIENDO SOLO LOS EQUIPOS QUE JUGARON COMO VISITANTES Y SUMANDOLE LOS GOLES EN CONTRA.
 function addDatos2(partidos2) {
@@ -104,8 +103,6 @@ function addDatos2(partidos2) {
     }
     creaTabla2(estadisticas2);
 }
-
-
 
 // CREO LA TABLA 1 DE LA MISMA MANERA QUE HICE LA TABLA DE PARTIDOS, PERO CON OTROS DATOS.
 function creaTabla(arrayEstadisticas) {
@@ -137,7 +134,6 @@ function creaTabla(arrayEstadisticas) {
         tbody.appendChild(filaHome);
     }
 }
-
 
 // DE LA MISMA FORMA CREO LA TABLA 2.
 function creaTabla2(arrayEsta2) {

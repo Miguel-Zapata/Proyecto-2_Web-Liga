@@ -23,6 +23,7 @@ function init(data) {
     crearTablaPartidos(data.matches);
     addOptions(data.matches);
     filter(data.matches);
+    console.log(data);
 
     // PARA QUE EL loader DESAPAREZCA CUABNDO CARGA LOS DATOS.
     let loader = document.getElementById('loader');
@@ -69,11 +70,15 @@ function crearTablaPartidos(partidos) {
         let celdaExtra5 = document.createElement('td');
         celdaExtra5.innerHTML = partidos[i].status;
         if (partidos[i].status == "FINISHED") {
-            celdaExtra5.innerHTML = "JUGADO"
+            celdaExtra5.innerHTML = "JUGADO";
         } else if (partidos[i].status == "POSTPONED") {
-            celdaExtra5.innerHTML = "POSTPUESTO"
+            celdaExtra5.innerHTML = "POSTPUESTO";
         } else if (partidos[i].status == "SCHEDULED") {
-            celdaExtra5.innerHTML = "NO JUGADO"
+            celdaExtra5.innerHTML = "NO JUGADO";
+        } else if (partidos[i].status == "PAUSED") {
+            celdaExtra5.innerHTML = "PAUSA";
+        } else if (partidos[i].status == "IN_PLAY") {
+            celdaExtra5.innerHTML = "EN JUEGO";
         }
 
         // INDEXO LAS CELDAS A LA FILA Y ESTA AL tbody PARA GENERAR LA ESTRUCTURA HTML DE LA TABLA.
@@ -90,7 +95,6 @@ function crearTablaPartidos(partidos) {
 
 // AÑADE LAS OPCIONES A LOS INPUTS TIPO SELECT QUE HARÁN DE FILTROS EN LA PAGINA partidos.html.
 function addOptions(partidos) {
-    // recorrer el array de partidos Y crear nueva array con los nombres de los equipos sin repetir ordenados por orden alfabetico.
     // HAGO UN .map POR data.matches PARA OBTENER UN ARRAY CON LOS NOMBRES DE TODOS LOS EQUIPOS.
     let equipos = partidos.map(function(equipo, index, array) {
         return equipo.homeTeam.name;
@@ -133,7 +137,7 @@ function addOptions(partidos) {
     // COJO EL 2º INPUT CON SU id Y LO GUARDO EN UNA VARIABLE.
     let inputResult = document.getElementById('result');
     // CREO MANUALMENTE EL ARRAY CON EL NOMBRE DE LAS OPCIONES QUE CONTENDRÁ EL 2º INPUT.
-    let optionResult = ["GANA", "PIERDE", "EMPATA", "PROXIMOS"];
+    let optionResult = ["EMPATA", "GANA", "PIERDE", "PROXIMOS"];
     // RECORRO EL ARRAY DE RESULTADOS Y LOS AÑADO COMO OPCIONES DEL SELECT.
     for (k = 0; k < optionResult.length; k++) {
         let option = document.createElement("option"); // he probado una sintaxis distinta que en la linea 124 para saber hacerlo de las 2 maneras.
@@ -151,11 +155,9 @@ function addOptions(partidos) {
 
 // FILTRA LOS PARTIDOS (data.matches) POR NOMBRE DE EQUIPO Y POR RESULTADOS.
 function filter(partidos) {
-    // COJO LA ALERTA DE ESCOGER EQUIPO CON LA id Y LE AÑADO LA CLASE d-none PARA OCULTARLA POR DEFECTO.
+    // COJO LAS ALERTAS CON LA id Y LE AÑADO LA CLASE d-none PARA OCULTARLAS POR DEFECTO.
     let alert = document.getElementById('alert');
     alert.classList.add('d-none');
-
-    // COJO LA ALERTA 2 CON SU id Y LE ASIGNO LA CLASE d-none PARA OCULTARLA POR DEFECTO.
     let alert2 = document.getElementById('alert2');
     alert2.classList.add('d-none');
 
@@ -260,11 +262,15 @@ function creaTablaFiltrada(partido) {
         let celda7 = document.createElement('td');
         celda7.innerHTML = partido[j].status;
         if (partido[j].status == "FINISHED") {
-            celda7.innerHTML = "JUGADO"
+            celda7.innerHTML = "JUGADO";
         } else if (partido[j].status == "POSTPONED") {
-            celda7.innerHTML = "POSTPUESTO"
+            celda7.innerHTML = "POSTPUESTO";
         } else if (partido[j].status == "SCHEDULED") {
-            celda7.innerHTML = "NO JUGADO"
+            celda7.innerHTML = "NO JUGADO";
+        } else if (partido[j].status == "PAUSED") {
+            celda7.innerHTML = "PAUSA";
+        } else if (partido[j].status == "IN_PLAY") {
+            celda7.innerHTML = "EN JUEGO"
         }
         tbody.appendChild(fila);
         fila.appendChild(celda1);
