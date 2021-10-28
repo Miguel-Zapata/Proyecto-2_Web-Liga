@@ -29,6 +29,7 @@ function init(data) {
 
 // CREA LA TABLA CON TODOS LOS PARTIDOS.
 function crearTablaPartidos(partidos) {
+
     let tbody = document.getElementById('tbody');
     let inputTeam = document.getElementById('team');
     let alert2 = document.getElementById('alert2');
@@ -50,6 +51,7 @@ function crearTablaPartidos(partidos) {
         celdaExtra1.innerHTML = partidos[i].homeTeam.name;
         let celdaEscudo1 = document.createElement('td');
         celdaEscudo1.innerHTML = imagenHome;
+
         let celdaExtra2 = document.createElement('td');
         celdaExtra2.innerHTML = `${partidos[i].score.fullTime.homeTeam} - ${partidos[i].score.fullTime.awayTeam}`;
         if (partidos[i].score.fullTime.homeTeam == null && partidos[i].score.fullTime.awayTeam == null) {
@@ -86,7 +88,7 @@ function crearTablaPartidos(partidos) {
     }
 }
 
-// AÑADE LAS OPCIONES A LOS INPUTS TIPO SELECT QUE HARÁN DE FILTROS EN LA PAGINA partidos.html.
+// AÑADE LAS OPCIONES A LOS INPUTS TIPO SELECT
 function addOptions(partidos) {
     let inputTeam = document.getElementById('team');
     let inputResult = document.getElementById('result');
@@ -114,6 +116,7 @@ function addOptions(partidos) {
 
     for (i = 0; i < equipos.length; i++) {
         let option = new Option(equipos[i], equipos[i]); // *(text, value).
+
         inputTeam.append(option);
     }
 
@@ -128,6 +131,7 @@ function addOptions(partidos) {
 
         inputResult.appendChild(option);
     }
+
     inputResult.addEventListener("change", function() {
         console.log(inputResult.value, inputTeam.value);
 
@@ -140,7 +144,7 @@ function addOptions(partidos) {
     })
 }
 
-// FILTRA LOS PARTIDOS (data.matches) POR NOMBRE DE EQUIPO Y POR RESULTADOS.
+// FILTRA LOS PARTIDOS POR NOMBRE DE EQUIPO Y POR RESULTADOS.
 function filter(partidos) {
     let alert = document.getElementById('alert');
     alert.classList.add('d-none');
@@ -150,6 +154,7 @@ function filter(partidos) {
     let inputTeam = document.getElementById('team');
     let inputResult = document.getElementById('result');
 
+
     if (inputTeam.value === "" && inputResult.value !== "") {
         inputResult.value = "";
     }
@@ -157,11 +162,11 @@ function filter(partidos) {
     if (inputTeam.value == "" && inputResult.value != "") {
         alert.classList.remove('d-none');
     }
-
     if (inputTeam.value == "") {
         crearTablaPartidos(partidos);
         return
     }
+
 
     let equipo = partidos.filter(function(partido) {
         if (partido.awayTeam.name == inputTeam.value) {
@@ -174,7 +179,9 @@ function filter(partidos) {
     })
 
     if (inputResult.value == "") {
+
         crearTablaPartidos(equipo);
+
         return
     }
 

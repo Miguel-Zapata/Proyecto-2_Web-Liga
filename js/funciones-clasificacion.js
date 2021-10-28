@@ -33,6 +33,7 @@ function crearTablaClasificaciones(clasificaciones) {
 
     for (let i = 0; i < clasificaciones.length; i++) {
         let positionRow = document.createElement('tr');
+
         let array = [clasificaciones[i].position, `<img src="${clasificaciones[i].team.crestUrl}"/>`, clasificaciones[i].team.name, clasificaciones[i].playedGames, clasificaciones[i].won, clasificaciones[i].draw, clasificaciones[i].lost, clasificaciones[i].goalsFor, clasificaciones[i].goalsAgainst, clasificaciones[i].goalDifference, clasificaciones[i].points, clasificaciones[i].form];
 
         for (let j = 0; j < array.length; j++) {

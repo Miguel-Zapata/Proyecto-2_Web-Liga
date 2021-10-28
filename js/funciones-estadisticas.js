@@ -92,7 +92,7 @@ function addDatos2(partidos2) {
     creaTabla2(estadisticas2);
 }
 
-// CREO LA TABLA 1 DE LA MISMA MANERA QUE HICE LA TABLA DE PARTIDOS, PERO CON OTROS DATOS.
+// CREO LA TABLA 1
 function creaTabla(arrayEstadisticas) {
     arrayEstadisticas.sort((a, b) => b.avg - a.avg);
     let tbody = document.getElementById('tbodyHome');
@@ -120,7 +120,7 @@ function creaTabla(arrayEstadisticas) {
     }
 }
 
-// DE LA MISMA FORMA CREO LA TABLA 2.
+// CREO LA TABLA 2.
 function creaTabla2(arrayEsta2) {
     arrayEsta2.sort((a, b) => a.golesContra - b.golesContra);
     let tbody = document.getElementById("tbodyAway");
@@ -143,5 +143,4 @@ function creaTabla2(arrayEsta2) {
         filaAway.appendChild(celdaAway4);
         tbody.appendChild(filaAway);
     }
-
 }
