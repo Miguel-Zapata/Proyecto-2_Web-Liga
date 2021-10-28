@@ -123,7 +123,6 @@ function creaTabla(arrayEstadisticas) {
 // CREO LA TABLA 2.
 function creaTabla2(arrayEsta2) {
     arrayEsta2.sort((a, b) => a.golesContra - b.golesContra);
-
     let tbody = document.getElementById("tbodyAway");
 
     for (q = 0; q < 5; q++) {
