@@ -22,9 +22,6 @@ fetch(url, {
 function init(data) {
     crearTablaPartidos(data.matches);
     addOptions(data.matches);
-    filter(data.matches);
-    console.log(data);
-
 
     let loader = document.getElementById('loader');
     loader.classList.add('d-none');
@@ -33,8 +30,16 @@ function init(data) {
 // CREA LA TABLA CON TODOS LOS PARTIDOS.
 function crearTablaPartidos(partidos) {
     let tbody = document.getElementById('tbody');
+    let inputTeam = document.getElementById('team');
+    let alert2 = document.getElementById('alert2');
+    alert2.classList.add('d-none');
+
     tbody.setAttribute("class", "tbody_partidos");
     tbody.innerHTML = "";
+
+    if (partidos.length == 0 && inputTeam.value !== "") {
+        alert2.classList.remove('d-none');
+    }
 
     for (let i = 0; i < partidos.length; i++) {
         let imagenHome = "<img src='https://crests.football-data.org/" + partidos[i].homeTeam.id + ".svg'/>";
@@ -83,7 +88,7 @@ function crearTablaPartidos(partidos) {
 
 // AÑADE LAS OPCIONES A LOS INPUTS TIPO SELECT QUE HARÁN DE FILTROS EN LA PAGINA partidos.html.
 function addOptions(partidos) {
-    let equipos = partidos.map(function(equipo, index, array) {
+    let equipos = partidos.map(function(equipo) {
         return equipo.homeTeam.name;
     });
 
@@ -139,6 +144,10 @@ function filter(partidos) {
     let inputTeam = document.getElementById('team');
     let inputResult = document.getElementById('result');
 
+    if (inputTeam.value === "" && inputResult.value !== "") {
+        inputResult.value = "";
+    }
+
     if (inputTeam.value == "" && inputResult.value != "") {
         alert.classList.remove('d-none');
     }
@@ -148,7 +157,7 @@ function filter(partidos) {
         return
     }
 
-    let equipo = partidos.filter(function(partido, i, array) {
+    let equipo = partidos.filter(function(partido) {
         if (partido.awayTeam.name == inputTeam.value) {
             return true;
         }
@@ -159,9 +168,11 @@ function filter(partidos) {
     })
 
     if (inputResult.value == "") {
-        creaTablaFiltrada(equipo);
+        crearTablaPartidos(equipo);
         return
     }
+
+
 
     let results = equipo.filter(function(partido) {
         if (partido.score.winner == "DRAW" && inputResult.value == "EMPATA") {
@@ -180,11 +191,11 @@ function filter(partidos) {
             return false;
         }
     })
-    creaTablaFiltrada(results);
+    crearTablaPartidos(results);
 }
 
 // CREA UNA TABLA CON LOS FILTROS QUE SELECCIONE EN LOS INPUTS.
-function creaTablaFiltrada(partido) {
+/* function creaTablaFiltrada(partido) {
     let alert2 = document.getElementById('alert2');
     let inputTeam = document.getElementById('team');
     let tbody = document.getElementById('tbody');
@@ -237,4 +248,4 @@ function creaTablaFiltrada(partido) {
         fila.appendChild(celda6);
         fila.appendChild(celda7);
     }
-}
+} */
