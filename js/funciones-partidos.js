@@ -88,6 +88,11 @@ function crearTablaPartidos(partidos) {
 
 // AÑADE LAS OPCIONES A LOS INPUTS TIPO SELECT QUE HARÁN DE FILTROS EN LA PAGINA partidos.html.
 function addOptions(partidos) {
+    let inputTeam = document.getElementById('team');
+    let inputResult = document.getElementById('result');
+    let optionResult = ["EMPATA", "GANA", "PIERDE", "PROXIMOS"];
+    let alert = document.getElementById('alert');
+    alert.classList.add('d-none');
     let equipos = partidos.map(function(equipo) {
         return equipo.homeTeam.name;
     });
@@ -107,8 +112,6 @@ function addOptions(partidos) {
     equipos = new Set(equipos);
     equipos = Array.from(equipos);
 
-    let inputTeam = document.getElementById('team');
-
     for (i = 0; i < equipos.length; i++) {
         let option = new Option(equipos[i], equipos[i]); // *(text, value).
         inputTeam.append(option);
@@ -118,10 +121,6 @@ function addOptions(partidos) {
         filter(partidos);
     })
 
-
-    let inputResult = document.getElementById('result');
-    let optionResult = ["EMPATA", "GANA", "PIERDE", "PROXIMOS"];
-
     for (k = 0; k < optionResult.length; k++) {
         let option = document.createElement("option");
         option.value = optionResult[k];
@@ -130,6 +129,13 @@ function addOptions(partidos) {
         inputResult.appendChild(option);
     }
     inputResult.addEventListener("change", function() {
+        console.log(inputResult.value, inputTeam.value);
+
+        if (inputTeam.value == "" && inputResult.value != "") {
+            console.log('hola');
+            alert.classList.remove('d-none');
+            return
+        }
         filter(partidos);
     })
 }
@@ -172,8 +178,6 @@ function filter(partidos) {
         return
     }
 
-
-
     let results = equipo.filter(function(partido) {
         if (partido.score.winner == "DRAW" && inputResult.value == "EMPATA") {
             return true;
@@ -193,59 +197,3 @@ function filter(partidos) {
     })
     crearTablaPartidos(results);
 }
-
-// CREA UNA TABLA CON LOS FILTROS QUE SELECCIONE EN LOS INPUTS.
-/* function creaTablaFiltrada(partido) {
-    let alert2 = document.getElementById('alert2');
-    let inputTeam = document.getElementById('team');
-    let tbody = document.getElementById('tbody');
-    tbody.innerHTML = "";
-
-    if (partido.length == 0 && inputTeam.value !== "") {
-        alert2.classList.remove('d-none');
-    }
-
-    for (j = 0; j < partido.length; j++) {
-        let imagenHome = "<img src='https://crests.football-data.org/" + partido[j].homeTeam.id + ".svg'/>";
-        let imagenAway = "<img src='https://crests.football-data.org/" + partido[j].awayTeam.id + ".svg'/>";
-
-        let fila = document.createElement('tr');
-
-        let celda1 = document.createElement('td');
-        celda1.innerHTML = partido[j].homeTeam.name;
-        let celda2 = document.createElement('td');
-        celda2.innerHTML = imagenHome;
-        let celda3 = document.createElement('td');
-        celda3.innerHTML = `${partido[j].score.fullTime.homeTeam} - ${partido[j].score.fullTime.awayTeam}`;
-        if (partido[j].score.fullTime.homeTeam == null && partido[j].score.fullTime.awayTeam == null) {
-            celda3.innerHTML = 'sin jugar';
-        }
-        let celda4 = document.createElement('td');
-        celda4.innerHTML = imagenAway;
-        let celda5 = document.createElement('td');
-        celda5.innerHTML = partido[j].awayTeam.name;
-        let celda6 = document.createElement('td');
-        celda6.innerHTML = partido[j].utcDate.substring(0, 10);
-        let celda7 = document.createElement('td');
-        celda7.innerHTML = partido[j].status;
-        if (partido[j].status == "FINISHED") {
-            celda7.innerHTML = "JUGADO";
-        } else if (partido[j].status == "POSTPONED") {
-            celda7.innerHTML = "POSTPUESTO";
-        } else if (partido[j].status == "SCHEDULED") {
-            celda7.innerHTML = "NO JUGADO";
-        } else if (partido[j].status == "PAUSED") {
-            celda7.innerHTML = "PAUSA";
-        } else if (partido[j].status == "IN_PLAY") {
-            celda7.innerHTML = "EN JUEGO"
-        }
-        tbody.appendChild(fila);
-        fila.appendChild(celda1);
-        fila.appendChild(celda2);
-        fila.appendChild(celda3);
-        fila.appendChild(celda4);
-        fila.appendChild(celda5);
-        fila.appendChild(celda6);
-        fila.appendChild(celda7);
-    }
-} */
