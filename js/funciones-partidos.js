@@ -22,8 +22,6 @@ fetch(url, {
 function init(data) {
     crearTablaPartidos(data.matches);
     addOptions(data.matches);
-    filter(data.matches);
-    console.log(data);
 
     let loader = document.getElementById('loader');
     loader.classList.add('d-none');
@@ -33,8 +31,16 @@ function init(data) {
 function crearTablaPartidos(partidos) {
 
     let tbody = document.getElementById('tbody');
+    let inputTeam = document.getElementById('team');
+    let alert2 = document.getElementById('alert2');
+    alert2.classList.add('d-none');
+
     tbody.setAttribute("class", "tbody_partidos");
     tbody.innerHTML = "";
+
+    if (partidos.length == 0 && inputTeam.value !== "") {
+        alert2.classList.remove('d-none');
+    }
 
     for (let i = 0; i < partidos.length; i++) {
         let imagenHome = "<img src='https://crests.football-data.org/" + partidos[i].homeTeam.id + ".svg'/>";
@@ -51,15 +57,12 @@ function crearTablaPartidos(partidos) {
         if (partidos[i].score.fullTime.homeTeam == null && partidos[i].score.fullTime.awayTeam == null) {
             celdaExtra2.innerHTML = 'sin jugar';
         }
-
         let celdaEscudo2 = document.createElement('td');
         celdaEscudo2.innerHTML = imagenAway;
         let celdaExtra3 = document.createElement('td');
         celdaExtra3.innerHTML = partidos[i].awayTeam.name;
-
         let celdaExtra4 = document.createElement('td');
         celdaExtra4.innerHTML = partidos[i].utcDate.substring(0, 10);
-
         let celdaExtra5 = document.createElement('td');
         celdaExtra5.innerHTML = partidos[i].status;
         if (partidos[i].status == "FINISHED") {
@@ -87,13 +90,18 @@ function crearTablaPartidos(partidos) {
 
 // AÑADE LAS OPCIONES A LOS INPUTS TIPO SELECT
 function addOptions(partidos) {
-    let equipos = partidos.map(function(equipo, index, array) {
+    let inputTeam = document.getElementById('team');
+    let inputResult = document.getElementById('result');
+    let optionResult = ["EMPATA", "GANA", "PIERDE", "PROXIMOS"];
+    let alert = document.getElementById('alert');
+    alert.classList.add('d-none');
+    let equipos = partidos.map(function(equipo) {
         return equipo.homeTeam.name;
     });
+
     equipos.sort((a, b) => {
         a = a.toLowerCase();
         b = b.toLowerCase();
-
         if (a < b) {
             return -1;
         }
@@ -106,9 +114,9 @@ function addOptions(partidos) {
     equipos = new Set(equipos);
     equipos = Array.from(equipos);
 
-    let inputTeam = document.getElementById('team');
     for (i = 0; i < equipos.length; i++) {
-        let option = new Option(equipos[i], equipos[i]);
+        let option = new Option(equipos[i], equipos[i]); // *(text, value).
+
         inputTeam.append(option);
     }
 
@@ -116,8 +124,6 @@ function addOptions(partidos) {
         filter(partidos);
     })
 
-    let inputResult = document.getElementById('result');
-    let optionResult = ["EMPATA", "GANA", "PIERDE", "PROXIMOS"];
     for (k = 0; k < optionResult.length; k++) {
         let option = document.createElement("option");
         option.value = optionResult[k];
@@ -127,6 +133,13 @@ function addOptions(partidos) {
     }
 
     inputResult.addEventListener("change", function() {
+        console.log(inputResult.value, inputTeam.value);
+
+        if (inputTeam.value == "" && inputResult.value != "") {
+            console.log('hola');
+            alert.classList.remove('d-none');
+            return
+        }
         filter(partidos);
     })
 }
@@ -141,6 +154,11 @@ function filter(partidos) {
     let inputTeam = document.getElementById('team');
     let inputResult = document.getElementById('result');
 
+
+    if (inputTeam.value === "" && inputResult.value !== "") {
+        inputResult.value = "";
+    }
+
     if (inputTeam.value == "" && inputResult.value != "") {
         alert.classList.remove('d-none');
     }
@@ -149,7 +167,8 @@ function filter(partidos) {
         return
     }
 
-    let equipo = partidos.filter(function(partido, i, array) {
+
+    let equipo = partidos.filter(function(partido) {
         if (partido.awayTeam.name == inputTeam.value) {
             return true;
         }
@@ -160,7 +179,9 @@ function filter(partidos) {
     })
 
     if (inputResult.value == "") {
-        creaTablaFiltrada(equipo);
+
+        crearTablaPartidos(equipo);
+
         return
     }
 
@@ -180,63 +201,6 @@ function filter(partidos) {
         } else {
             return false;
         }
-
     })
-    creaTablaFiltrada(results);
-}
-
-// CREA UNA TABLA CON LOS FILTROS QUE SELECCIONE EN LOS INPUTS.
-function creaTablaFiltrada(partido) {
-    let alert2 = document.getElementById('alert2');
-    let inputTeam = document.getElementById('team');
-    let tbody = document.getElementById('tbody');
-    tbody.innerHTML = "";
-
-    if (partido.length == 0 && inputTeam.value !== "") {
-        alert2.classList.remove('d-none');
-    }
-
-    for (j = 0; j < partido.length; j++) {
-        let imagenHome = "<img src='https://crests.football-data.org/" + partido[j].homeTeam.id + ".svg'/>";
-        let imagenAway = "<img src='https://crests.football-data.org/" + partido[j].awayTeam.id + ".svg'/>";
-
-        let fila = document.createElement('tr');
-
-        let celda1 = document.createElement('td');
-        celda1.innerHTML = partido[j].homeTeam.name;
-        let celda2 = document.createElement('td');
-        celda2.innerHTML = imagenHome;
-        let celda3 = document.createElement('td');
-        celda3.innerHTML = `${partido[j].score.fullTime.homeTeam} - ${partido[j].score.fullTime.awayTeam}`;
-        if (partido[j].score.fullTime.homeTeam == null && partido[j].score.fullTime.awayTeam == null) {
-            celda3.innerHTML = 'sin jugar';
-        }
-        let celda4 = document.createElement('td');
-        celda4.innerHTML = imagenAway;
-        let celda5 = document.createElement('td');
-        celda5.innerHTML = partido[j].awayTeam.name;
-        let celda6 = document.createElement('td');
-        celda6.innerHTML = partido[j].utcDate.substring(0, 10);
-        let celda7 = document.createElement('td');
-        celda7.innerHTML = partido[j].status;
-        if (partido[j].status == "FINISHED") {
-            celda7.innerHTML = "JUGADO";
-        } else if (partido[j].status == "POSTPONED") {
-            celda7.innerHTML = "POSTPUESTO";
-        } else if (partido[j].status == "SCHEDULED") {
-            celda7.innerHTML = "NO JUGADO";
-        } else if (partido[j].status == "PAUSED") {
-            celda7.innerHTML = "PAUSA";
-        } else if (partido[j].status == "IN_PLAY") {
-            celda7.innerHTML = "EN JUEGO"
-        }
-        tbody.appendChild(fila);
-        fila.appendChild(celda1);
-        fila.appendChild(celda2);
-        fila.appendChild(celda3);
-        fila.appendChild(celda4);
-        fila.appendChild(celda5);
-        fila.appendChild(celda6);
-        fila.appendChild(celda7);
-    }
+    crearTablaPartidos(results);
 }
